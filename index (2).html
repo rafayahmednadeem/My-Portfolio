@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rafay Ahmed Nadeem – Video Editor</title>
+  <meta name="description" content="Rafay Ahmed Nadeem is a video editor specializing in vlogs and YouTube videos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Thin "timeline" bar at the top. The playhead moves as you scroll. -->
+  <div class="timeline" aria-hidden="true"><span class="timeline-playhead"></span></div>
+
+  <header class="nav">
+    <a class="nav-name" href="#top">Rafay Ahmed Nadeem</a>
+    <span class="nav-timecode" id="timecode" aria-hidden="true">00:00:00:00</span>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1 class="hero-name">
+        <span class="line"><span class="line-inner">Rafay Ahmed</span></span>
+        <span class="line"><span class="line-inner">Nadeem</span></span>
+      </h1>
+      <div class="hero-meta">
+        <p class="hero-role">Professional video editor. Vlogs, YouTube, short-form.</p>
+        <p class="hero-tagline">Raw footage in, a video people finish watching out.</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="#work">View work</a>
+          <a class="btn btn-line" href="#contact">Contact</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="section" id="work">
+      <div class="section-head reveal"><h2>Work</h2></div>
+      <div class="section-body">
+        <!--
+          To add your own video:
+          1. data-video = the YouTube ID (the part after v= in the link)
+          2. data-thumb = path to a thumbnail image, e.g. "thumbs/vlog-1.jpg"
+             (or leave it empty to keep the gray placeholder)
+        -->
+        <div class="work-grid">
+          <button class="project p1 reveal" data-video="REPLACE_ID" data-thumb="">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Project title one</span>
+            <span class="project-cat">Vlog</span>
+          </button>
+          <button class="project p2 reveal" data-video="REPLACE_ID" data-thumb="">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Project title two</span>
+            <span class="project-cat">YouTube</span>
+          </button>
+          <button class="project p3 reveal" data-video="REPLACE_ID" data-thumb="">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Project title three</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p4 reveal" data-video="REPLACE_ID" data-thumb="">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Project title four</span>
+            <span class="project-cat">Cinematic edit</span>
+          </button>
+          <button class="project p5 reveal" data-video="REPLACE_ID" data-thumb="">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Project title five</span>
+            <span class="project-cat">Vlog</span>
+          </button>
+          <button class="project p6 reveal" data-video="REPLACE_ID" data-thumb="">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Project title six</span>
+            <span class="project-cat">YouTube</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="section-head reveal"><h2>About</h2></div>
+      <div class="section-body about-body">
+        <p class="about-text reveal">I’m a video editor who likes turning raw footage into something that holds attention. I mostly cut vlogs and YouTube videos: smooth cuts, clean transitions, sound design, and a story that keeps moving. I want every video to be good enough that people stay until the end.</p>
+        <div class="software reveal">
+          <h3>Software</h3>
+          <ul>
+            <li>CapCut Pro</li>
+            <li>Adobe Premiere Pro</li>
+            <li>Canva</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="section-head reveal"><h2>Services</h2></div>
+      <div class="section-body">
+        <ul class="services">
+          <li class="reveal">
+            <h3>YouTube editing</h3>
+            <p>Full edits from rough footage: pacing, cuts, captions, music and a clean final export.</p>
+          </li>
+          <li class="reveal">
+            <h3>Vlog editing</h3>
+            <p>Travel, daily life and lifestyle vlogs cut into a clear story with smooth transitions.</p>
+          </li>
+          <li class="reveal">
+            <h3>Reels and TikTok</h3>
+            <p>Vertical edits that hook in the first second and keep a fast, readable rhythm.</p>
+          </li>
+          <li class="reveal">
+            <h3>Sound design</h3>
+            <p>Music, effects and audio cleanup so the video sounds as good as it looks.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-head reveal"><h2>Contact</h2></div>
+      <div class="section-body">
+        <p class="contact-lead reveal">Have a project? Send me the details and some footage links.</p>
+        <a class="contact-mail reveal" href="mailto:rafayahmednadeem@gmail.com">rafayahmednadeem@gmail.com</a>
+        <div class="contact-social reveal">
+          <a href="https://www.instagram.com/rafay.ahmed0/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@rafayahmednadeem" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> Rafay Ahmed Nadeem</span>
+    <a href="#top">Back to top</a>
+  </footer>
+
+  <!-- Video modal -->
+  <dialog class="modal" id="modal" aria-label="Video player">
+    <button class="modal-close" id="modalClose" aria-label="Close video">Close</button>
+    <div class="modal-frame" id="modalFrame"></div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

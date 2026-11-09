@@ -1,341 +1,180 @@
-<!doctype html>
-<html lang="en" class="scroll-smooth motion-reduce:scroll-auto">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rafay Ahmed Nadeem — Video Editor</title>
-  <meta name="description" content="Video editor cutting gaming videos, YouTube Shorts and social edits. Portfolio of Rafay Ahmed Nadeem.">
-  <meta name="theme-color" content="#0a0a0a">
-
+  <title>Rafay Ahmed Nadeem – Video Editor</title>
+  <meta name="description" content="Rafay Ahmed Nadeem is a video editor specializing in vlogs and YouTube videos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Flag JS early so reveal animations only hide things when JS is actually running -->
-  <script>document.documentElement.classList.add('js');</script>
-
-  <!-- Tailwind via the Play CDN: no npm, no build step -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    /* Theme: black, gray, white only. Everything else in the site pulls from here. */
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            base: '#0a0a0a',
-            surface: '#111111',
-            surface2: '#171717',
-            line: '#262626',
-            'line-strong': '#3a3a3a',
-            ink: '#ededed',
-            mute: '#8c8c8c'
-          },
-          fontFamily: {
-            display: ['Anton', 'Impact', 'Arial Narrow', 'sans-serif'],
-            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-            mono: ['ui-monospace', 'SF Mono', 'Menlo', 'Consolas', 'monospace']
-          },
-          spacing: {
-            gutter: 'clamp(1.25rem, 4vw, 3.5rem)',
-            section: 'clamp(5rem, 12vw, 10rem)'
-          },
-          fontSize: {
-            hero:    ['clamp(4.5rem, min(23vw, 24svh), 20rem)', { lineHeight: '0.86', letterSpacing: '-0.025em' }],
-            title:   ['clamp(2.75rem, 8vw, 7rem)',              { lineHeight: '0.95', letterSpacing: '-0.02em' }],
-            service: ['clamp(1.75rem, 4vw, 3rem)',              { lineHeight: '1',    letterSpacing: '-0.015em' }],
-            card:    ['clamp(1.35rem, 2.4vw, 1.9rem)',          { lineHeight: '1.05', letterSpacing: '-0.01em' }],
-            mail:    ['clamp(1.5rem, 6.2vw, 5.5rem)',           { lineHeight: '1',    letterSpacing: '-0.01em' }]
-          }
-        }
-      }
-    };
-  </script>
-
-  <!-- Small reusable pieces, written with Tailwind's @apply -->
-  <style type="text/tailwindcss">
-    @layer components {
-      .mono          { @apply font-mono text-[0.72rem] uppercase tracking-[0.06em] text-mute; }
-      .label         { @apply mb-5 font-mono text-[0.72rem] uppercase tracking-[0.06em] text-mute; }
-      .display       { @apply font-display font-normal uppercase; }
-      .section       { @apply border-b border-line px-gutter py-section; }
-      .section-title { @apply font-display font-normal uppercase text-title; }
-      .nav-link      { @apply relative py-1 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100; }
-    }
-  </style>
-
-  <!-- Only what utilities can't do cleanly: grain, keyframes, cursor, state classes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+<body>
 
-<body class="overflow-x-hidden bg-base font-sans leading-relaxed text-ink antialiased">
+  <!-- Thin "timeline" bar at the top. The playhead moves as you scroll. -->
+  <div class="timeline" aria-hidden="true"><span class="timeline-playhead"></span></div>
 
-  <!-- Scroll progress: thin timeline bar at the bottom + running timecode -->
-  <div class="progress fixed inset-x-0 bottom-0 z-[100] h-[3px] bg-line" aria-hidden="true">
-    <div class="progress__bar h-full origin-left bg-ink will-change-transform"></div>
-  </div>
-  <div class="timecode mono fixed bottom-3 right-gutter z-[60] !text-white mix-blend-difference" aria-hidden="true">00:00:00:00</div>
-
-  <!-- Custom cursor (mouse devices only) -->
-  <div class="cursor" aria-hidden="true"><span class="cursor__label mono">Play</span></div>
-
-  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-gutter py-4 text-white mix-blend-difference">
-    <a class="mono !text-white" href="#top">R.A.N</a>
-    <nav class="flex gap-4 text-[0.85rem] md:gap-9" aria-label="Main">
-      <a class="nav-link" href="#work">Work</a>
-      <a class="nav-link" href="#about">About</a>
-      <a class="nav-link" href="#services">Services</a>
-      <a class="nav-link" href="#contact">Contact</a>
+  <header class="nav">
+    <a class="nav-name" href="#top">Rafay Ahmed Nadeem</a>
+    <span class="nav-timecode" id="timecode" aria-hidden="true">00:00:00:00</span>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <main>
+  <main id="top">
 
-    <!-- 00 · HERO -->
-    <section class="hero relative flex min-h-[100svh] items-end overflow-hidden border-b border-line px-gutter pb-8 pt-24 md:pb-14" id="top">
-      <!-- Showreel loads after the page does (see script.js). Drop your file at assets/showreel.mp4 -->
-      <video class="hero__video absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-[1200ms]"
-             data-src="assets/showreel.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
-      <div class="absolute inset-0 bg-gradient-to-t from-base/95 via-base/25 to-base/50"></div>
-
-      <div class="relative w-full">
-        <p class="hero__meta mono mb-4 flex gap-6 md:mb-8">
-          <span>REC</span>
-          <span>Showreel 2026</span>
-          <span>00:00:00:00</span>
-        </p>
-
-        <h1 class="display text-hero">
-          <span class="line block overflow-hidden pt-[0.04em]"><span class="line__inner block">Rafay</span></span>
-          <span class="line block overflow-hidden pt-[0.04em]"><span class="line__inner block">Ahmed</span></span>
-          <span class="line block overflow-hidden pt-[0.04em]"><span class="line__inner block">Nadeem</span></span>
-        </h1>
-
-        <p class="hero__role mt-5 max-w-md text-[clamp(1rem,1.5vw,1.15rem)] text-ink md:mt-8">Video editor. Gaming videos, Shorts and social edits.</p>
-      </div>
-    </section>
-
-    <!-- 01 · WORK -->
-    <section class="section" id="work">
-      <div class="mb-8 md:mb-16" data-reveal>
-        <p class="label">(01) Work</p>
-        <h2 class="section-title">Selected cuts</h2>
-      </div>
-
-      <div class="mb-10 flex flex-wrap gap-2 md:mb-14" role="group" aria-label="Filter projects" data-reveal>
-        <button type="button" class="chip mono is-active border border-line-strong px-4 py-2 transition-colors hover:border-ink hover:text-ink" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" class="chip mono border border-line-strong px-4 py-2 transition-colors hover:border-ink hover:text-ink" data-filter="reels" aria-pressed="false">Reels</button>
-        <button type="button" class="chip mono border border-line-strong px-4 py-2 transition-colors hover:border-ink hover:text-ink" data-filter="youtube" aria-pressed="false">YouTube</button>
-        <button type="button" class="chip mono border border-line-strong px-4 py-2 transition-colors hover:border-ink hover:text-ink" data-filter="commercial" aria-pressed="false">Commercial</button>
-      </div>
-
-      <!--
-        PROJECT CARDS
-        To add one: copy a card, change the number, title, category and the file paths.
-        Wide cards use aspect-video (16:9). Tall cards use aspect-[9/16].
-        The column spans (md:col-span-*) and offsets (md:mt-*) are what make the grid uneven.
-        All titles and files below are placeholders. Replace them with your own.
-      -->
-      <div class="grid grid-cols-1 items-start gap-x-6 gap-y-[clamp(2.5rem,6vw,4.5rem)] md:grid-cols-12">
-
-        <article class="card md:col-span-7" data-category="youtube" data-reveal>
-          <button class="card__media group relative block aspect-video w-full overflow-hidden border border-line bg-surface2 transition-colors hover:border-line-strong"
-                  type="button" data-num="01" data-full="assets/videos/01.mp4" data-title="Ranked Clutch Montage" aria-label="Play Ranked Clutch Montage">
-            <img class="absolute inset-0 h-full w-full object-cover brightness-[.62] grayscale transition duration-700 group-hover:scale-[1.035] group-hover:brightness-95"
-                 src="" alt="Ranked Clutch Montage" loading="lazy" width="1280" height="720">
-            <video class="absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-500" muted loop playsinline preload="none" data-src="assets/previews/01.mp4" tabindex="-1"></video>
-            <span class="mono absolute bottom-3 left-3 z-[2] bg-base px-[0.45rem] py-[0.2rem] !text-ink">00:00:12:04</span>
-          </button>
-          <div class="mt-3.5 grid grid-cols-[auto_1fr] gap-x-3.5">
-            <span class="mono pt-1.5 !text-ink">01</span>
-            <h3 class="display text-card">Ranked Clutch Montage</h3>
-            <p class="mono col-start-2 mt-1.5">YouTube / 03:12</p>
-          </div>
-        </article>
-
-        <article class="card max-w-xs md:col-span-4 md:mt-20 md:max-w-none" data-category="reels" data-reveal>
-          <button class="card__media group relative block aspect-[9/16] w-full overflow-hidden border border-line bg-surface2 transition-colors hover:border-line-strong"
-                  type="button" data-num="02" data-full="assets/videos/02.mp4" data-title="Short: Hook in Three Seconds" aria-label="Play Short: Hook in Three Seconds">
-            <img class="absolute inset-0 h-full w-full object-cover brightness-[.62] grayscale transition duration-700 group-hover:scale-[1.035] group-hover:brightness-95"
-                 src="/assets/first.mp4" alt="SHORT THUMBNAIL" loading="lazy" width="720" height="1280">
-            <video class="absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-500" muted loop playsinline preload="none" data-src="assets/previews/02.mp4" tabindex="-1"></video>
-            <span class="mono absolute bottom-3 left-3 z-[2] bg-base px-[0.45rem] py-[0.2rem] !text-ink">00:00:03:18</span>
-          </button>
-          <div class="mt-3.5 grid grid-cols-[auto_1fr] gap-x-3.5">
-            <span class="mono pt-1.5 !text-ink">02</span>
-            <h3 class="display text-card">SHORT THUMBNAIL</h3>
-            <p class="mono col-start-2 mt-1.5">Reels / 00:34</p>
-          </div>
-        </article>
-
-        <article class="card md:col-span-5 md:mt-8" data-category="commercial" data-reveal>
-          <button class="card__media group relative block aspect-video w-full overflow-hidden border border-line bg-surface2 transition-colors hover:border-line-strong"
-                  type="button" data-num="03" data-full="assets/videos/03.mp4" data-title="Product Spot, 30s Cut" aria-label="Play Product Spot, 30s Cut">
-            <img class="absolute inset-0 h-full w-full object-cover brightness-[.62] grayscale transition duration-700 group-hover:scale-[1.035] group-hover:brightness-95"
-                 src="assets/thumbs/03.jpg" alt="" loading="lazy" width="1280" height="720">
-            <video class="absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-500" muted loop playsinline preload="none" data-src="assets/previews/03.mp4" tabindex="-1"></video>
-            <span class="mono absolute bottom-3 left-3 z-[2] bg-base px-[0.45rem] py-[0.2rem] !text-ink">00:00:07:11</span>
-          </button>
-          <div class="mt-3.5 grid grid-cols-[auto_1fr] gap-x-3.5">
-            <span class="mono pt-1.5 !text-ink">03</span>
-            <h3 class="display text-card">Product Spot, 30s Cut</h3>
-            <p class="mono col-start-2 mt-1.5">Commercial / 00:30</p>
-          </div>
-        </article>
-
-        <article class="card max-w-xs md:col-span-3 md:max-w-none" data-category="reels" data-reveal>
-          <button class="card__media group relative block aspect-[9/16] w-full overflow-hidden border border-line bg-surface2 transition-colors hover:border-line-strong"
-                  type="button" data-num="04" data-full="assets/videos/04.mp4" data-title="Gameplay Reel, Vertical" aria-label="Play Gameplay Reel, Vertical">
-            <img class="absolute inset-0 h-full w-full object-cover brightness-[.62] grayscale transition duration-700 group-hover:scale-[1.035] group-hover:brightness-95"
-                 src="assets/thumbs/04.jpg" alt="" loading="lazy" width="720" height="1280">
-            <video class="absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-500" muted loop playsinline preload="none" data-src="assets/previews/04.mp4" tabindex="-1"></video>
-            <span class="mono absolute bottom-3 left-3 z-[2] bg-base px-[0.45rem] py-[0.2rem] !text-ink">00:00:09:02</span>
-          </button>
-          <div class="mt-3.5 grid grid-cols-[auto_1fr] gap-x-3.5">
-            <span class="mono pt-1.5 !text-ink">04</span>
-            <h3 class="display text-card">Gameplay Reel, Vertical</h3>
-            <p class="mono col-start-2 mt-1.5">Reels / 00:21</p>
-          </div>
-        </article>
-
-        <article class="card md:col-span-4 md:mt-24" data-category="youtube" data-reveal>
-          <button class="card__media group relative block aspect-video w-full overflow-hidden border border-line bg-surface2 transition-colors hover:border-line-strong"
-                  type="button" data-num="05" data-full="assets/videos/05.mp4" data-title="Full Match Highlights" aria-label="Play Full Match Highlights">
-            <img class="absolute inset-0 h-full w-full object-cover brightness-[.62] grayscale transition duration-700 group-hover:scale-[1.035] group-hover:brightness-95"
-                 src="assets/thumbs/05.jpg" alt="" loading="lazy" width="1280" height="720">
-            <video class="absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-500" muted loop playsinline preload="none" data-src="assets/previews/05.mp4" tabindex="-1"></video>
-            <span class="mono absolute bottom-3 left-3 z-[2] bg-base px-[0.45rem] py-[0.2rem] !text-ink">00:00:21:15</span>
-          </button>
-          <div class="mt-3.5 grid grid-cols-[auto_1fr] gap-x-3.5">
-            <span class="mono pt-1.5 !text-ink">05</span>
-            <h3 class="display text-card">Full Match Highlights</h3>
-            <p class="mono col-start-2 mt-1.5">YouTube / 08:40</p>
-          </div>
-        </article>
-
-        <article class="card md:col-span-7" data-category="commercial" data-reveal>
-          <button class="card__media group relative block aspect-video w-full overflow-hidden border border-line bg-surface2 transition-colors hover:border-line-strong"
-                  type="button" data-num="06" data-full="assets/videos/06.mp4" data-title="Brand Promo, Social Cutdown" aria-label="Play Brand Promo, Social Cutdown">
-            <img class="absolute inset-0 h-full w-full object-cover brightness-[.62] grayscale transition duration-700 group-hover:scale-[1.035] group-hover:brightness-95"
-                 src="assets/thumbs/06.jpg" alt="" loading="lazy" width="1280" height="720">
-            <video class="absolute inset-0 h-full w-full object-cover opacity-0 grayscale transition-opacity duration-500" muted loop playsinline preload="none" data-src="assets/previews/06.mp4" tabindex="-1"></video>
-            <span class="mono absolute bottom-3 left-3 z-[2] bg-base px-[0.45rem] py-[0.2rem] !text-ink">00:00:05:20</span>
-          </button>
-          <div class="mt-3.5 grid grid-cols-[auto_1fr] gap-x-3.5">
-            <span class="mono pt-1.5 !text-ink">06</span>
-            <h3 class="display text-card">Brand Promo, Social Cutdown</h3>
-            <p class="mono col-start-2 mt-1.5">Commercial / 00:45</p>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- 02 · ABOUT -->
-    <section class="section grid gap-10 md:grid-cols-12 md:gap-6" id="about">
-      <div class="about__photo aspect-[3/4] max-w-sm overflow-hidden border border-line bg-surface2 md:col-span-4 md:mt-16 md:max-w-none" data-reveal>
-        <!-- Replace with assets/rafay.jpg (portrait, roughly 3:4) -->
-        <img class="h-full w-full object-cover contrast-[1.05] grayscale" src="assets/rafay.jpg" alt="Portrait of Rafay Ahmed Nadeem" loading="lazy" width="900" height="1200">
-      </div>
-
-      <div class="md:col-span-7 md:col-start-6">
-        <p class="label" data-reveal>(02) About</p>
-        <h2 class="section-title" data-reveal>Raw footage in.<br>Watchable video out.</h2>
-
-        <div class="mt-8 max-w-xl space-y-4 text-[#c9c9c9]" data-reveal>
-          <p>I'm Rafay Ahmed. I edit gaming videos, YouTube Shorts and social clips.</p>
-          <p>Most of my cutting happens in CapCut Pro. Covers, thumbnails and graphics come out of Canva. I like finding the part of a long clip that people actually want to watch, and building the edit around it.</p>
-          <p>I'm still learning and still getting faster. Every project teaches me something I use on the next one.</p>
+    <!-- HERO -->
+    <section class="hero">
+      <h1 class="hero-name">
+        <span class="line"><span class="line-inner">Rafay Ahmed</span></span>
+        <span class="line"><span class="line-inner">Nadeem</span></span>
+      </h1>
+      <div class="hero-meta">
+        <p class="hero-role">Professional video editor. Vlogs, YouTube, short-form.</p>
+        <p class="hero-tagline">Raw footage in, a video people finish watching out.</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="#work">View work</a>
+          <a class="btn btn-line" href="#contact">Contact</a>
         </div>
-
-        <dl class="mt-10 max-w-xl border-t border-line" data-reveal>
-          <div class="grid grid-cols-[6rem_1fr] gap-4 border-b border-line py-3.5">
-            <dt class="mono pt-1">Tools</dt>
-            <dd class="text-[0.95rem]">CapCut Pro, Canva</dd>
-          </div>
-          <div class="grid grid-cols-[6rem_1fr] gap-4 border-b border-line py-3.5">
-            <dt class="mono pt-1">Formats</dt>
-            <dd class="text-[0.95rem]">YouTube videos, Shorts, Reels, social clips</dd>
-          </div>
-          <div class="grid grid-cols-[6rem_1fr] gap-4 border-b border-line py-3.5">
-            <dt class="mono pt-1">Skills</dt>
-            <dd class="text-[0.95rem]">Pacing and cuts, captions, sound sync, transitions, thumbnails, color cleanup</dd>
-          </div>
-          <div class="grid grid-cols-[6rem_1fr] gap-4 border-b border-line py-3.5">
-            <dt class="mono pt-1">Focus</dt>
-            <dd class="text-[0.95rem]">Gaming content</dd>
-          </div>
-        </dl>
       </div>
     </section>
 
-    <!-- 03 · SERVICES -->
+    <!-- WORK -->
+    <section class="section" id="work">
+      <div class="section-head reveal"><h2>Work</h2></div>
+      <div class="section-body">
+        <!--
+          To add a video: data-video = YouTube ID (the part after v= or /shorts/ in the link).
+          data-thumb = thumbnail image. Currently uses the YouTube thumbnail;
+          swap it for your own file, e.g. "assets/img1.png".
+          Cards with class "landscape" are wide, the rest are portrait.
+        -->
+        <div class="work-grid">
+          <button class="project p1 reveal" data-video="iu4DcbsVEwM" data-thumb="https://i.ytimg.com/vi/iu4DcbsVEwM/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 01</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p2 reveal" data-video="Q8sxKh2_21s" data-thumb="https://i.ytimg.com/vi/Q8sxKh2_21s/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 02</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p3 reveal" data-video="0t4tq8SQ_U8" data-thumb="https://i.ytimg.com/vi/0t4tq8SQ_U8/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 03</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p4 reveal" data-video="1X1xkgjop1I" data-thumb="https://i.ytimg.com/vi/1X1xkgjop1I/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 04</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p5 reveal" data-video="5LCxrGv8T9Q" data-thumb="https://i.ytimg.com/vi/5LCxrGv8T9Q/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 05</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p6 reveal" data-video="dBXvXeDXK_k" data-thumb="https://i.ytimg.com/vi/dBXvXeDXK_k/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 06</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p7 reveal" data-video="r936G9kPQgM" data-thumb="https://i.ytimg.com/vi/r936G9kPQgM/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 07</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project p8 reveal" data-video="f1J0AypkoIw" data-thumb="https://i.ytimg.com/vi/f1J0AypkoIw/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Short 08</span>
+            <span class="project-cat">Short-form</span>
+          </button>
+          <button class="project landscape l1 reveal" data-video="8TEZSAwwf9c" data-thumb="https://i.ytimg.com/vi/8TEZSAwwf9c/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Video 01</span>
+            <span class="project-cat">YouTube</span>
+          </button>
+          <button class="project landscape l2 reveal" data-video="CO2fhVrRQxU" data-thumb="https://i.ytimg.com/vi/CO2fhVrRQxU/hqdefault.jpg">
+            <span class="project-thumb"><span class="play"></span></span>
+            <span class="project-title">Video 02</span>
+            <span class="project-cat">YouTube</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="section-head reveal"><h2>About</h2></div>
+      <div class="section-body about-body">
+        <p class="about-text reveal">I’m a video editor who likes turning raw footage into something that holds attention. I mostly cut vlogs and YouTube videos: smooth cuts, clean transitions, sound design, and a story that keeps moving. I want every video to be good enough that people stay until the end.</p>
+        <div class="software reveal">
+          <h3>Software</h3>
+          <ul>
+            <li>CapCut Pro</li>
+            <li>Adobe Premiere Pro</li>
+            <li>Canva</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
     <section class="section" id="services">
-      <div class="mb-8 md:mb-16" data-reveal>
-        <p class="label">(03) Services</p>
-        <h2 class="section-title">What I do</h2>
+      <div class="section-head reveal"><h2>Services</h2></div>
+      <div class="section-body">
+        <ul class="services">
+          <li class="reveal">
+            <h3>YouTube editing</h3>
+            <p>Full edits from rough footage: pacing, cuts, captions, music and a clean final export.</p>
+          </li>
+          <li class="reveal">
+            <h3>Vlog editing</h3>
+            <p>Travel, daily life and lifestyle vlogs cut into a clear story with smooth transitions.</p>
+          </li>
+          <li class="reveal">
+            <h3>Reels and TikTok</h3>
+            <p>Vertical edits that hook in the first second and keep a fast, readable rhythm.</p>
+          </li>
+          <li class="reveal">
+            <h3>Sound design</h3>
+            <p>Music, effects and audio cleanup so the video sounds as good as it looks.</p>
+          </li>
+        </ul>
       </div>
-
-      <ol class="border-t border-line">
-        <li class="grid gap-x-6 gap-y-2 border-b border-line py-7 md:grid-cols-[4rem_1fr_1fr] md:items-baseline md:py-9 md:hover:bg-surface" data-reveal>
-          <span class="mono !text-ink">A</span>
-          <h3 class="display text-service">Gaming edits</h3>
-          <p class="max-w-lg text-[#b5b5b5]">Montages, highlights and full videos. I trim the dead time, match cuts to the audio and keep the best moments on screen.</p>
-        </li>
-        <li class="grid gap-x-6 gap-y-2 border-b border-line py-7 md:grid-cols-[4rem_1fr_1fr] md:items-baseline md:py-9 md:hover:bg-surface" data-reveal>
-          <span class="mono !text-ink">B</span>
-          <h3 class="display text-service">Shorts and Reels</h3>
-          <p class="max-w-lg text-[#b5b5b5]">Vertical cuts built for the first three seconds. Captions, quick pacing, clean exports for each platform.</p>
-        </li>
-        <li class="grid gap-x-6 gap-y-2 border-b border-line py-7 md:grid-cols-[4rem_1fr_1fr] md:items-baseline md:py-9 md:hover:bg-surface" data-reveal>
-          <span class="mono !text-ink">C</span>
-          <h3 class="display text-service">Thumbnails and covers</h3>
-          <p class="max-w-lg text-[#b5b5b5]">Made in Canva to match the video, so the thumbnail and the edit look like they belong together.</p>
-        </li>
-        <li class="grid gap-x-6 gap-y-2 border-b border-line py-7 md:grid-cols-[4rem_1fr_1fr] md:items-baseline md:py-9 md:hover:bg-surface" data-reveal>
-          <span class="mono !text-ink">D</span>
-          <h3 class="display text-service">Revisions</h3>
-          <p class="max-w-lg text-[#b5b5b5]">You send notes, I fix them. Tell me what to change and I'll turn it around without a long back-and-forth.</p>
-        </li>
-      </ol>
     </section>
 
-    <!-- 04 · CONTACT -->
-    <section class="section border-b-0" id="contact">
-      <p class="label" data-reveal>(04) Contact</p>
-      <h2 class="section-title" data-reveal>Send me footage.</h2>
-
-      <div class="mt-6 md:mt-12" data-reveal>
-        <a class="display inline-block border-b-2 border-ink pb-1 text-mail [overflow-wrap:anywhere] transition-colors hover:border-mute hover:text-mute"
-           href="mailto:rafayahmednadeem@gmail.com">rafayahmednadeem@gmail.com</a>
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-head reveal"><h2>Contact</h2></div>
+      <div class="section-body">
+        <p class="contact-lead reveal">Have a project? Send me the details and some footage links.</p>
+        <a class="contact-mail reveal" href="mailto:rafayahmednadeem@gmail.com">rafayahmednadeem@gmail.com</a>
+        <div class="contact-social reveal">
+          <a href="https://www.instagram.com/rafay.ahmed0/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@rafayahmednadeem" target="_blank" rel="noopener">TikTok</a>
+        </div>
       </div>
-
-      <ul class="mono mt-10 flex flex-wrap gap-x-8 gap-y-3" data-reveal>
-        <li><a class="border-b border-line-strong pb-0.5 !text-ink hover:border-ink" href="https://www.instagram.com/rafay.ahmed0/" target="_blank" rel="noopener">Instagram</a></li>
-         <li><a class="border-b border-line-strong pb-0.5 !text-ink hover:border-ink" href="https://www.tiktok.com/@rafayahmednadeem" target="_blank" rel="noopener">Tiktok</a></li>
-        <li><a class="border-b border-line-strong pb-0.5 !text-ink hover:border-ink" href="mailto:rafayahmednadeem@gmail.com?subject=Video%20edit%20project">Email me about a project</a></li>
-        
-      </ul>
     </section>
-
   </main>
 
-  <footer class="mono flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-line px-gutter pb-[3.25rem] pt-6">
-    <span>&copy; <span id="year">2026</span> Rafay Ahmed Nadeem</span>
-    <span>End of timeline 00:03:00:00</span>
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> Rafay Ahmed Nadeem</span>
+    <a href="#top">Back to top</a>
   </footer>
 
   <!-- Video modal -->
-  <dialog class="player w-[min(1100px,94vw)] max-h-[94svh] border border-line-strong bg-base p-0 text-ink backdrop:bg-black/90" id="player" aria-labelledby="player-title">
-    <div class="p-3">
-      <div class="flex items-center justify-between gap-4 pb-3 pt-1">
-        <p class="mono !text-ink" id="player-title"></p>
-        <button type="button" class="mono border border-line-strong px-2.5 py-1.5 transition-colors hover:bg-ink hover:!text-base" id="player-close">Close [Esc]</button>
-      </div>
-      <video class="max-h-[76svh] w-full bg-black" id="player-video" controls playsinline preload="none"></video>
-      <p class="mono mt-3" id="player-note" hidden>Video file not found. Add it to the assets/videos folder.</p>
-    </div>
+  <dialog class="modal" id="modal" aria-label="Video player">
+    <button class="modal-close" id="modalClose" aria-label="Close video">Close</button>
+    <div class="modal-frame" id="modalFrame"></div>
   </dialog>
 
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
